@@ -1,6 +1,8 @@
 import 'dart:convert';
-import 'package:api_testing/model/post_model.dart';
+
 import 'package:api_testing/model/single_post_model.dart';
+import 'package:api_testing/view/list_post/post_model.dart';
+import 'package:api_testing/view/mix_data_api/model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices {
@@ -39,7 +41,7 @@ class ApiServices {
     }
     return null;
   }
-//////////////////Post MOdel
+////////////////// list Post with  MOdel
 
   Future<List<PostModel>?> getPostWithModel() async {
     try {
@@ -57,4 +59,46 @@ class ApiServices {
 
     return null;
   }
+
+
+
+  ////////////////// list Post without MOdel
+
+  Future<dynamic> getPostWithoutModel() async {
+    try {
+      var response = await http
+          .get(Uri.parse("https://jsonplaceholder.typicode.com/posts"));
+
+      if (response.statusCode == 200) {
+       final model =jsonDecode(response.body);
+       return model;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+
+    return null;
+  }
+
+
+
+  ////mix model 
+   Future<multiData?> getMultiDataWithOutModel()async{
+    try {
+      var response = await http.get(Uri.parse("https://reqres.in/api/users?page=2"));
+
+      if (response.statusCode==200) {
+        multiData model = multiData.fromJson(json.decode(response.body));
+        return model;
+      }
+    } catch (e) {
+      print(e);
+      
+    }
+    return null;
+   }
+
+  getListPostWithModel() {}
+
 }
+
